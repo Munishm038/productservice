@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class FakeStoreProductService implements ProductService {
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public FakeStoreProductService(RestTemplate restTemplate) {
@@ -32,19 +32,18 @@ public class FakeStoreProductService implements ProductService {
     }
 
     private List<Product> convertFakeStoreProductListToProductList(FakeStoreProductDto[] fakeStoreProductDto) {
-        ArrayList<Product> products = new ArrayList<>();
-        Arrays.stream(fakeStoreProductDto).forEach(product -> {
-            products.add(convertFakeStoreProductToProduct(product));
-        });
 
-        return products;
+        return Arrays.stream(fakeStoreProductDto).map(product ->  convertFakeStoreProductToProduct(product)).toList();
     }
 
     @Override
     public Product getSingleProduct(Long id) {
         FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
 
-        return convertFakeStoreProductToProduct(fakeStoreProductDto);
+        if (fakeStoreProductDto != null) {
+            return convertFakeStoreProductToProduct(fakeStoreProductDto);
+        }
+        return null;
     }
 
     @Override

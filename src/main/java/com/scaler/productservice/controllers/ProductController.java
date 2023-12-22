@@ -11,13 +11,11 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private ProductService productService;
-    private RestTemplate restTemplate;
+    private final ProductService productService;
 
     @Autowired
     public ProductController(ProductService productService, RestTemplate restTemplate) {
         this.productService = productService;
-        this.restTemplate = restTemplate;
     }
 
     @GetMapping()
