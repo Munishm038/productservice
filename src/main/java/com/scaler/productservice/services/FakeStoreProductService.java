@@ -52,4 +52,9 @@ public class FakeStoreProductService implements ProductService {
 
         return convertFakeStoreProductListToProductList(fakeStoreProductDtos);
     }
+
+    @Override
+    public void deleteProduct(Long id) {
+        restTemplate.delete("https://fakestoreapi.com/products/"+id);
+    }
 }

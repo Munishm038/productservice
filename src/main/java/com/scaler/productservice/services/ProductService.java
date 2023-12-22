@@ -6,4 +6,5 @@ import java.util.*;
 public interface ProductService {
     Product getSingleProduct(Long id);
     List<Product> getProducts();
+    void deleteProduct(Long id);
 }
