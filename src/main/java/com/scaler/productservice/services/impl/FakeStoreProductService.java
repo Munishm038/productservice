@@ -1,10 +1,11 @@
-package com.scaler.productservice.services;
+package com.scaler.productservice.services.impl;
 
 import java.util.*;
 
 import com.scaler.productservice.dtos.FakeStoreProductDto;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
+import com.scaler.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,7 +34,7 @@ public class FakeStoreProductService implements ProductService {
 
     private List<Product> convertFakeStoreProductListToProductList(FakeStoreProductDto[] fakeStoreProductDto) {
 
-        return Arrays.stream(fakeStoreProductDto).map(product ->  convertFakeStoreProductToProduct(product)).toList();
+        return Arrays.stream(fakeStoreProductDto).map(this::convertFakeStoreProductToProduct).toList();
     }
 
     @Override
