@@ -7,6 +7,9 @@ import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,6 +38,33 @@ public class FakeStoreProductService implements ProductService {
     private List<Product> convertFakeStoreProductListToProductList(FakeStoreProductDto[] fakeStoreProductDto) {
 
         return Arrays.stream(fakeStoreProductDto).map(this::convertFakeStoreProductToProduct).toList();
+    }
+
+    @Override
+    public Product createProduct(FakeStoreProductDto fakeStoreProductDto) {
+        FakeStoreProductDto fakeStoreProductDtoResult = restTemplate.postForObject("https://fakestoreapi.com/products", fakeStoreProductDto, FakeStoreProductDto.class);
+
+        if (fakeStoreProductDtoResult != null) {
+            return this.convertFakeStoreProductToProduct(fakeStoreProductDtoResult);
+        }
+        return null;
+    }
+
+    @Override
+    public Product updateProduct(Long id, FakeStoreProductDto fakeStoreProductDto) {
+        HttpEntity<FakeStoreProductDto> requestEntity = new HttpEntity<>(fakeStoreProductDto);
+        ResponseEntity<FakeStoreProductDto> response = restTemplate.exchange(
+                "https://fakestoreapi.com/products/"+id,
+                HttpMethod.PUT,
+                requestEntity,
+                FakeStoreProductDto.class
+        );
+
+        if(response.getBody() == null) {
+            return null;
+        }
+
+        return this.convertFakeStoreProductToProduct(response.getBody());
     }
 
     @Override
