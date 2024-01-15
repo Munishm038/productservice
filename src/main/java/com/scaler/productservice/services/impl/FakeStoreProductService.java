@@ -5,7 +5,6 @@ import java.util.*;
 import com.scaler.productservice.dtos.FakeStoreProductDto;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
-import com.scaler.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class FakeStoreProductService implements ProductService {
+public class FakeStoreProductService implements com.scaler.productservice.services.FakeStoreProductService {
     private final RestTemplate restTemplate;
 
     @Autowired
