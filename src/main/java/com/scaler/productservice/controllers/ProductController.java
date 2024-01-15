@@ -1,42 +1,42 @@
 package com.scaler.productservice.controllers;
 import java.util.*;
 
-import com.scaler.productservice.dtos.FakeStoreProductDto;
-import com.scaler.productservice.models.Product;
-import com.scaler.productservice.services.ProductService;
+import com.scaler.productservice.dtos.ProductDto;
+import com.scaler.productservice.services.SelfProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
-    private final ProductService productService;
+    private final SelfProductService productService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(SelfProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping()
-    public List<Product> getAllProducts() {
+    public List<ProductDto> getAllProducts() {
         return productService.getProducts();
     }
 
     @GetMapping("/{id}")
-    public Product getSingleProduct(@PathVariable Long id) {
+    public ProductDto getSingleProduct(@PathVariable Long id) {
         return productService.getSingleProduct(id);
     }
 
     @PostMapping()
-    public Product createProduct(@RequestBody FakeStoreProductDto fakeStoreProductDto) {
+    public ProductDto createProduct(@Valid @RequestBody ProductDto productDto) {
 
-        return productService.createProduct(fakeStoreProductDto);
+        return productService.createProduct(productDto);
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") Long id, @RequestBody FakeStoreProductDto fakeStoreProductDto) {
+    public ProductDto updateProduct(@Valid @PathVariable("id") Long id, @RequestBody ProductDto productDto) {
 
-        return productService.updateProduct(id, fakeStoreProductDto);
+        return productService.updateProduct(id, productDto);
     }
 
     @DeleteMapping("/{id}")
