@@ -1,24 +1,49 @@
 package com.scaler.productservice.controllers;
 
-import com.scaler.productservice.models.Category;
+import com.scaler.productservice.dtos.CategoryDto;
 import com.scaler.productservice.services.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 public class CategoryController {
 
+    private final CategoryService categoryService;
+
     @Autowired
-    private CategoryService categoryService;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping()
-    public List<Category> getCategories() {
+    public List<CategoryDto> getAllCategories() {
         return categoryService.getCategories();
+    }
+
+    @GetMapping("/{id}")
+    public CategoryDto getSingleCategory(@PathVariable Long id) {
+        return categoryService.getSingleCategory(id);
+    }
+
+    @PostMapping()
+    public CategoryDto createCategory(@Valid @RequestBody CategoryDto categoryDto) {
+
+        return categoryService.createCategory(categoryDto);
+    }
+
+    @PutMapping("/{id}")
+    public CategoryDto updateCategory(@Valid @PathVariable("id") Long id, @RequestBody CategoryDto categoryDto) {
+
+        return categoryService.updateCategory(id, categoryDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable("id") Long id) {
+        categoryService.deleteCategory(id);
     }
 
 }

@@ -4,7 +4,7 @@ import com.scaler.productservice.dtos.FakeStoreProductDto;
 import com.scaler.productservice.models.Product;
 
 import java.util.*;
-public interface ProductService {
+public interface FakeStoreProductService {
     Product createProduct(FakeStoreProductDto fakeStoreProductDto);
     Product updateProduct(Long id, FakeStoreProductDto fakeStoreProductDto);
     Product getSingleProduct(Long id);
