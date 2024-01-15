@@ -1,10 +1,14 @@
 package com.scaler.productservice.services;
 
-import com.scaler.productservice.models.Category;
+import com.scaler.productservice.dtos.CategoryDto;
 
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> getCategories();
+    CategoryDto createCategory(CategoryDto categoryDto);
+    CategoryDto updateCategory(Long id, CategoryDto categoryDto);
+    void deleteCategory(Long id);
+    CategoryDto getSingleCategory(Long id);
+    List<CategoryDto> getCategories();
 
 }
